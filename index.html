@@ -1,622 +1,1381 @@
-<!DOCTYPE html>
+!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Commerce Analytics — Livingstones Global</title>
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --bg-base: #0A0E17;
+      --bg-card: #0F1524;
+      --bg-card-hover: #141C30;
+      --bg-card-elevated: #162036;
+      --accent-blue: #00B3FF;
+      --accent-blue-glow: rgba(0, 179, 255, 0.15);
+      --accent-orange: #FF6B1A;
+      --accent-orange-glow: rgba(255, 107, 26, 0.15);
+      --accent-green: #10B981;
+      --accent-purple: #8B5CF6;
+      --border-subtle: #1C273E;
+      --border-accent: rgba(0, 179, 255, 0.4);
+      --text-primary: #E6EDF7;
+      --text-secondary: #7F8CA3;
+      --text-muted: #4B556D;
+      --font-main: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
 
-<html class="h-full bg-background text-on-surface" lang="es"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Livingstones Global · Global Commerce Suite</title>
-<!-- Google Fonts: Geist & Inter -->
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
-<!-- Material Symbols Outlined -->
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<!-- Tailwind CSS v3 with configuration -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script id="tailwind-config">
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          "colors": {
-            "on-surface": "#191c1e",
-            "outline-variant": "#c6c6cd",
-            "on-secondary-fixed": "#00201d",
-            "tertiary-fixed-dim": "#b7c8e1",
-            "surface-container": "#eceef0",
-            "primary-fixed": "#dae2fd",
-            "on-secondary": "#ffffff",
-            "tertiary-container": "#0b1c30",
-            "error": "#ba1a1a",
-            "on-primary": "#ffffff",
-            "surface-tint": "#565e74",
-            "outline": "#76777d",
-            "error-container": "#ffdad6",
-            "surface-container-high": "#e6e8ea",
-            "primary-fixed-dim": "#bec6e0",
-            "on-tertiary": "#ffffff",
-            "on-tertiary-fixed-variant": "#38485d",
-            "primary": "#000000",
-            "surface-container-highest": "#e0e3e5",
-            "surface-variant": "#e0e3e5",
-            "on-primary-container": "#7c839b",
-            "surface-dim": "#d8dadc",
-            "tertiary": "#000000",
-            "on-secondary-fixed-variant": "#005049",
-            "primary-container": "#131b2e",
-            "secondary-fixed": "#89f5e7",
-            "on-primary-fixed": "#131b2e",
-            "inverse-primary": "#bec6e0",
-            "inverse-surface": "#2d3133",
-            "background": "#f7f9fb",
-            "tertiary-fixed": "#d3e4fe",
-            "surface-container-low": "#f2f4f6",
-            "on-secondary-container": "#006f66",
-            "on-background": "#191c1e",
-            "surface-bright": "#f7f9fb",
-            "on-primary-fixed-variant": "#3f465c",
-            "secondary": "#006a61",
-            "surface-container-lowest": "#ffffff",
-            "secondary-fixed-dim": "#6bd8cb",
-            "secondary-container": "#86f2e4",
-            "on-tertiary-fixed": "#0b1c30",
-            "surface": "#f7f9fb",
-            "on-tertiary-container": "#75859d",
-            "inverse-on-surface": "#eff1f3",
-            "on-error-container": "#93000a",
-            "on-error": "#ffffff",
-            "on-surface-variant": "#45464d"
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      font-family: var(--font-main);
+      min-height: 100vh;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Fondo con sutil gradiente radial y cuadrícula técnica */
+    .bg-ambient {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background: 
+        radial-gradient(circle at 15% 10%, rgba(0, 179, 255, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 85% 30%, rgba(255, 107, 26, 0.04) 0%, transparent 35%),
+        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+    }
+
+    .app-container {
+      position: relative;
+      z-index: 1;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 24px 32px 48px;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 28px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-subtle);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .brand-section {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .badge-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent-blue);
+      background: rgba(0, 179, 255, 0.08);
+      border: 1px solid rgba(0, 179, 255, 0.25);
+      padding: 4px 10px;
+      border-radius: 9999px;
+      width: fit-content;
+      box-shadow: 0 0 12px var(--accent-blue-glow);
+    }
+
+    .badge-brand .pulse-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: var(--accent-blue);
+      box-shadow: 0 0 8px var(--accent-blue);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    .page-title {
+      font-size: 1.65rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin-top: 6px;
+    }
+
+    .page-subtitle {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .filter-pill {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+      padding: 6px 12px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+    }
+
+    .filter-pill b {
+      color: var(--text-primary);
+    }
+
+    .btn-action {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-action:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 12px var(--accent-blue-glow);
+    }
+
+    /* KPIs Grid */
+    .kpis-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    @media (max-width: 1200px) {
+      .kpis-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .kpis-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 18px 20px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--border-accent);
+      box-shadow: 0 8px 24px -6px rgba(0, 179, 255, 0.12);
+    }
+
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, transparent);
+      transition: background 0.3s ease;
+    }
+
+    .kpi-card.highlight::before {
+      background: linear-gradient(90deg, var(--accent-blue), transparent);
+    }
+
+    .kpi-card.highlight-orange::before {
+      background: linear-gradient(90deg, var(--accent-orange), transparent);
+    }
+
+    .kpi-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .kpi-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-secondary);
+    }
+
+    .kpi-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+    }
+
+    .kpi-card.highlight .kpi-icon {
+      color: var(--accent-blue);
+      border-color: rgba(0, 179, 255, 0.3);
+      background: rgba(0, 179, 255, 0.06);
+    }
+
+    .kpi-card.highlight-orange .kpi-icon {
+      color: var(--accent-orange);
+      border-color: rgba(255, 107, 26, 0.3);
+      background: rgba(255, 107, 26, 0.06);
+    }
+
+    .kpi-value {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+      font-family: var(--font-mono);
+      margin-bottom: 4px;
+    }
+
+    .kpi-footer {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.74rem;
+    }
+
+    .badge-trend-up {
+      color: var(--accent-green);
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .badge-trend-note {
+      color: var(--text-muted);
+    }
+
+    /* Tabs Navigation */
+    .tabs-nav-container {
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(10, 14, 23, 0.85);
+      backdrop-filter: blur(12px);
+      padding-top: 8px;
+    }
+
+    .tabs-nav {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .tabs-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      padding: 12px 18px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      border-radius: 8px 8px 0 0;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .tab-btn.active {
+      color: var(--accent-blue);
+      background: rgba(0, 179, 255, 0.04);
+    }
+
+    .tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--accent-blue);
+      box-shadow: 0 -2px 8px var(--accent-blue);
+    }
+
+    .tab-btn .tab-badge {
+      font-size: 0.7rem;
+      padding: 2px 6px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.06);
+      font-family: var(--font-mono);
+      color: var(--text-secondary);
+    }
+
+    .tab-btn.active .tab-badge {
+      background: rgba(0, 179, 255, 0.15);
+      color: var(--accent-blue);
+    }
+
+    /* Tab Content Panes */
+    .tab-pane {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .tab-pane.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Cards & Layout */
+    .grid-dashboard {
+      display: grid;
+      grid-template-columns: 2fr 1.2fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 1024px) {
+      .grid-dashboard {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 22px;
+      position: relative;
+    }
+
+    .card.bordered-neon {
+      border-color: rgba(0, 179, 255, 0.25);
+      box-shadow: 0 4px 20px -4px rgba(0, 179, 255, 0.06);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .card-title-group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-subtitle {
+      font-size: 0.76rem;
+      color: var(--text-secondary);
+    }
+
+    .card-action-tag {
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+    }
+
+    .chart-container {
+      position: relative;
+      width: 100%;
+      height: 310px;
+    }
+
+    .chart-container-compact {
+      position: relative;
+      width: 100%;
+      height: 260px;
+    }
+
+    /* Table Component */
+    .data-table-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      overflow: hidden;
+      margin-top: 24px;
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.82rem;
+    }
+
+    th {
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--text-secondary);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 0.72rem;
+    }
+
+    td {
+      padding: 14px 18px;
+      border-bottom: 1px solid rgba(28, 39, 62, 0.5);
+      color: var(--text-primary);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.015);
+    }
+
+    .mono-cell {
+      font-family: var(--font-mono);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 8px;
+      border-radius: 9999px;
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+
+    .status-success {
+      background: rgba(16, 185, 129, 0.12);
+      color: var(--accent-green);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+    }
+
+    .status-warning {
+      background: rgba(255, 107, 26, 0.12);
+      color: var(--accent-orange);
+      border: 1px solid rgba(255, 107, 26, 0.25);
+    }
+
+    .status-info {
+      background: rgba(0, 179, 255, 0.12);
+      color: var(--accent-blue);
+      border: 1px solid rgba(0, 179, 255, 0.25);
+    }
+
+    /* Mini Insight Box */
+    .insight-callout {
+      background: rgba(0, 179, 255, 0.04);
+      border-left: 3px solid var(--accent-blue);
+      border-radius: 0 8px 8px 0;
+      padding: 12px 16px;
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .insight-callout b {
+      color: var(--text-primary);
+    }
+
+    .insight-callout.orange {
+      background: rgba(255, 107, 26, 0.04);
+      border-left-color: var(--accent-orange);
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-ambient"></div>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header>
+      <div class="brand-section">
+        <div class="badge-brand">
+          <span class="pulse-dot"></span>
+          E-Commerce Analytics — Livingstones Global
+        </div>
+        <h1 class="page-title">Dashboard Ejecutivo de Rendimiento Comercial y Logístico</h1>
+        <p class="page-subtitle">Monitoreo integral de ventas, canales regionales, eficiencia de descuentos y fidelidad de clientes</p>
+      </div>
+
+      <div class="header-actions">
+        <div class="filter-pill">
+          <i data-lucide="calendar" style="width: 14px; height: 14px; color: var(--accent-blue);"></i>
+          <span>Período: <b>Año Móvil 2024</b></span>
+        </div>
+        <div class="filter-pill">
+          <i data-lucide="layers" style="width: 14px; height: 14px; color: var(--accent-orange);"></i>
+          <span>Moneda: <b>USD ($)</b></span>
+        </div>
+        <button class="btn-action" onclick="refreshDashboard()">
+          <i data-lucide="refresh-cw" style="width: 14px; height: 14px;"></i>
+          Actualizar
+        </button>
+      </div>
+    </header>
+
+    <!-- Bloque de KPIs Principales -->
+    <section class="kpis-grid">
+      <!-- KPI 1: Facturación Total -->
+      <div class="kpi-card highlight">
+        <div class="kpi-top">
+          <span class="kpi-label">Total Facturado</span>
+          <div class="kpi-icon">
+            <i data-lucide="dollar-sign" style="width: 18px; height: 18px;"></i>
+          </div>
+        </div>
+        <div class="kpi-value">$5,11 M</div>
+        <div class="kpi-footer">
+          <span class="badge-trend-up">
+            <i data-lucide="trending-up" style="width: 13px; height: 13px;"></i> +14.2%
+          </span>
+          <span class="badge-trend-note">vs período previo</span>
+        </div>
+      </div>
+
+      <!-- KPI 2: Total Pedidos -->
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <span class="kpi-label">Total Pedidos</span>
+          <div class="kpi-icon">
+            <i data-lucide="shopping-cart" style="width: 18px; height: 18px;"></i>
+          </div>
+        </div>
+        <div class="kpi-value">5.000</div>
+        <div class="kpi-footer">
+          <span class="badge-trend-up">
+            <i data-lucide="check-circle-2" style="width: 13px; height: 13px;"></i> 99.4%
+          </span>
+          <span class="badge-trend-note">tasa de efectividad</span>
+        </div>
+      </div>
+
+      <!-- KPI 3: Total Unidades -->
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <span class="kpi-label">Total Unidades</span>
+          <div class="kpi-icon">
+            <i data-lucide="package" style="width: 18px; height: 18px;"></i>
+          </div>
+        </div>
+        <div class="kpi-value">20.224</div>
+        <div class="kpi-footer">
+          <span class="badge-trend-up">
+            <i data-lucide="layers" style="width: 13px; height: 13px;"></i> 4.04
+          </span>
+          <span class="badge-trend-note">unid / orden prom.</span>
+        </div>
+      </div>
+
+      <!-- KPI 4: Ticket Promedio -->
+      <div class="kpi-card highlight">
+        <div class="kpi-top">
+          <span class="kpi-label">Ticket Promedio</span>
+          <div class="kpi-icon">
+            <i data-lucide="receipt" style="width: 18px; height: 18px;"></i>
+          </div>
+        </div>
+        <div class="kpi-value">$1.021,96</div>
+        <div class="kpi-footer">
+          <span class="badge-trend-up">
+            <i data-lucide="arrow-up-right" style="width: 13px; height: 13px;"></i> +5.8%
+          </span>
+          <span class="badge-trend-note">promedio ponderado</span>
+        </div>
+      </div>
+
+      <!-- KPI 5: Ticket Mediano (Con acento naranja neón por dispersión/outliers) -->
+      <div class="kpi-card highlight-orange">
+        <div class="kpi-top">
+          <span class="kpi-label">Ticket Mediano</span>
+          <div class="kpi-icon">
+            <i data-lucide="split" style="width: 18px; height: 18px;"></i>
+          </div>
+        </div>
+        <div class="kpi-value">$796,65</div>
+        <div class="kpi-footer">
+          <span style="color: var(--accent-orange); font-weight: 600; display: inline-flex; align-items: center; gap: 2px;">
+            <i data-lucide="alert-circle" style="width: 13px; height: 13px;"></i> -22% vs Prom
+          </span>
+          <span class="badge-trend-note">sesgo por órdenes corporativas</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sistema de Navegación por Pestañas -->
+    <div class="tabs-nav-container">
+      <nav class="tabs-nav">
+        <button class="tab-btn active" onclick="switchTab('tab-1', this)">
+          <i data-lucide="bar-chart-3" style="width: 16px; height: 16px;"></i>
+          Pestaña 1: Desempeño Comercial
+          <span class="tab-badge">Principal</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('tab-2', this)">
+          <i data-lucide="truck" style="width: 16px; height: 16px;"></i>
+          Pestaña 2: Descuentos y Logística
+          <span class="tab-badge">SLA & Margen</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('tab-3', this)">
+          <i data-lucide="users" style="width: 16px; height: 16px;"></i>
+          Pestaña 3: Clientes y Medios de Pago
+          <span class="tab-badge">Financiero</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- CONTENIDO PESTAÑA 1: Desempeño Comercial -->
+    <div id="tab-1" class="tab-pane active">
+      <div class="grid-dashboard">
+        <!-- Gráfico 1: Facturación por Mes (Líneas neón con punto pico naranja) -->
+        <div class="card bordered-neon">
+          <div class="card-header">
+            <div class="card-title-group">
+              <h3 class="card-title">
+                <i data-lucide="trending-up" style="width: 18px; height: 18px; color: var(--accent-blue);"></i>
+                Facturación Mensual (Evolución Temporal)
+              </h3>
+              <span class="card-subtitle">Evolución en miles de USD ($K) con detección de picos de demanda estacional</span>
+            </div>
+            <span class="card-action-tag">Línea Neón Azul + Outliers</span>
+          </div>
+          <div class="chart-container">
+            <canvas id="monthlySalesChart"></canvas>
+          </div>
+          <div class="insight-callout">
+            <div>
+              <i data-lucide="sparkles" style="width: 15px; height: 15px; color: var(--accent-blue); display: inline-block; vertical-align: middle;"></i>
+              Pico sobresaliente detectado en <b>Noviembre ($680K)</b> impulsado por Black Friday comercial y compras B2B.
+            </div>
+            <span class="card-action-tag" style="color: var(--accent-blue); border-color: rgba(0,179,255,0.3);">Óptimo</span>
+          </div>
+        </div>
+
+        <!-- Gráfico 2: Distribución por Categorías -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title-group">
+              <h3 class="card-title">
+                <i data-lucide="pie-chart" style="width: 18px; height: 18px; color: var(--accent-blue);"></i>
+                Distribución por Categorías
+              </h3>
+              <span class="card-subtitle">Participación proporcional sobre el volumen total facturado</span>
+            </div>
+            <span class="card-action-tag">Donut Chart</span>
+          </div>
+          <div class="chart-container">
+            <canvas id="categoryDistributionChart"></canvas>
+          </div>
+          <div class="insight-callout orange">
+            <div>
+              <i data-lucide="info" style="width: 15px; height: 15px; color: var(--accent-orange); display: inline-block; vertical-align: middle;"></i>
+              <b>Tecnología y Equipamiento</b> concentra más del <b>46%</b> del revenue neto global.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fila Inferior: Barras de Región y Top Desempeño Comercial -->
+      <div class="grid-dashboard">
+        <!-- Gráfico 3: Rendimiento por Región -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title-group">
+              <h3 class="card-title">
+                <i data-lucide="map-pin" style="width: 18px; height: 18px; color: var(--accent-blue);"></i>
+                Facturación por Región Geográfica
+              </h3>
+              <span class="card-subtitle">Desglose comparativo de ventas acumuladas por zona comercial</span>
+            </div>
+            <span class="card-action-tag">Barras Neón</span>
+          </div>
+          <div class="chart-container">
+            <canvas id="regionSalesChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Tabla de Resumen Top Clientes / Canales -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title-group">
+              <h3 class="card-title">
+                <i data-lucide="award" style="width: 18px; height: 18px; color: var(--accent-orange);"></i>
+                Canales de Distribución Clave
+              </h3>
+              <span class="card-subtitle">Eficiencia de conversión y tickets por canal</span>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Canal</th>
+                  <th>Órdenes</th>
+                  <th>Venta Total</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><b>Online Directo (D2C)</b></td>
+                  <td class="mono-cell">2.340</td>
+                  <td class="mono-cell" style="color: var(--accent-blue); font-weight:700;">$2.42 M</td>
+                  <td><span class="status-badge status-success">Líder</span></td>
+                </tr>
+                <tr>
+                  <td><b>Marketplaces (B2C)</b></td>
+                  <td class="mono-cell">1.610</td>
+                  <td class="mono-cell">$1.58 M</td>
+                  <td><span class="status-badge status-info">Estable</span></td>
+                </tr>
+                <tr>
+                  <td><b>B2B Corporativo</b></td>
+                  <td class="mono-cell">680</td>
+                  <td class="mono-cell" style="color: var(--accent-orange); font-weight:700;">$890 K</td>
+                  <td><span class="status-badge status-warning">Alto Ticket</span></td>
+                </tr>
+                <tr>
+                  <td><b>Venta Telefónica / Outbound</b></td>
+                  <td class="mono-cell">370</td>
+                  <td class="mono-cell">$220 K</td>
+                  <td><span class="status-badge status-info">Regular</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTENIDO PESTAÑA 2: Descuentos y Logística -->
+    <div id="tab-2" class="tab-pane">
+      <div class="grid-dashboard">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title-group">
+              <h3 class="card-title">
+                <i data-lucide="percent" style="width: 18px; height: 18px; color: var(--accent-orange);"></i>
+                Impacto de Descuentos en Margen Bruto
+              </h3>
+              <span class="card-subtitle">Correlación entre tasa de descuento aplicada y margen obtenido</span>
+            </div>
+            <span class="card-action-tag">Dispersión de Sensibilidad</span>
+          </div>
+          <div class="chart-container">
+            <canvas id="discountsChart"></canvas>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title-group">
+              <h3 class="card-title">
+                <i data-lucide="clock" style="width: 18px; height: 18px; color: var(--accent-blue);"></i>
+                Cumplimiento de Tiempos de Entrega (SLA)
+              </h3>
+              <span class="card-subtitle">Días promedio de envío versus meta acordada por zona</span>
+            </div>
+            <span class="card-action-tag">Logística</span>
+          </div>
+          <div class="chart-container">
+            <canvas id="slaChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Detalle Logístico -->
+      <div class="data-table-card">
+        <div style="padding: 18px 20px; border-bottom: 1px solid var(--border-subtle); display:flex; justify-content:space-between; align-items:center;">
+          <h4 style="font-size: 0.95rem; font-weight:700;">Desempeño de Couriers y Operadores Logísticos</h4>
+          <span class="card-action-tag">KPI Logístico 2024</span>
+        </div>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Operador Logístico</th>
+                <th>Envíos Totales</th>
+                <th>Tiempo Promedio</th>
+                <th>SLA Cumplido</th>
+                <th>Tasa de Incidencias</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>DHL Express Worldwide</b></td>
+                <td class="mono-cell">1.840</td>
+                <td class="mono-cell">2.1 días</td>
+                <td class="mono-cell" style="color: var(--accent-green);">98.2%</td>
+                <td class="mono-cell">0.8%</td>
+                <td><span class="status-badge status-success">Excelente</span></td>
+              </tr>
+              <tr>
+                <td><b>FedEx Priority</b></td>
+                <td class="mono-cell">1.450</td>
+                <td class="mono-cell">2.6 días</td>
+                <td class="mono-cell" style="color: var(--accent-blue);">96.5%</td>
+                <td class="mono-cell">1.4%</td>
+                <td><span class="status-badge status-info">Normal</span></td>
+              </tr>
+              <tr>
+                <td><b>Estafeta Terrestre</b></td>
+                <td class="mono-cell">980</td>
+                <td class="mono-cell">4.8 días</td>
+                <td class="mono-cell" style="color: var(--accent-orange);">91.0%</td>
+                <td class="mono-cell">3.2%</td>
+                <td><span class="status-badge status-warning">Alerta SLA</span></td>
+              </tr>
+              <tr>
+                <td><b>Redpack Regional</b></td>
+                <td class="mono-cell">730</td>
+                <td class="mono-cell">4.2 días</td>
+                <td class="mono-cell">93.4%</td>
+                <td class="mono-cell">2.1%</td>
+                <td><span class="status-badge status-info">Controlado</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTENIDO PESTAÑA 3: Clientes y Medios de Pago -->
+    <div id="tab-3" class="tab-pane">
+      <div class="grid-dashboard">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title-group">
+              <h3 class="card-title">
+                <i data-lucide="credit-card" style="width: 18px; height: 18px; color: var(--accent-blue);"></i>
+                Mix de Métodos de Pago
+              </h3>
+              <span class="card-subtitle">Volumen total transaccionado clasificado por medio financiero</span>
+            </div>
+            <span class="card-action-tag">Pasarelas</span>
+          </div>
+          <div class="chart-container">
+            <canvas id="paymentMethodsChart"></canvas>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title-group">
+              <h3 class="card-title">
+                <i data-lucide="user-check" style="width: 18px; height: 18px; color: var(--accent-orange);"></i>
+                Retención: Nuevos vs Recurrentes
+              </h3>
+              <span class="card-subtitle">Comportamiento mensual de recurrencia de compradores</span>
+            </div>
+            <span class="card-action-tag">Cohort Ratio</span>
+          </div>
+          <div class="chart-container">
+            <canvas id="customerRetentionChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="data-table-card">
+        <div style="padding: 18px 20px; border-bottom: 1px solid var(--border-subtle); display:flex; justify-content:space-between; align-items:center;">
+          <h4 style="font-size: 0.95rem; font-weight:700;">Costos de Adquisición y Métricas de Pasarela</h4>
+          <span class="card-action-tag">Finanzas E-commerce</span>
+        </div>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Pasarela / Método</th>
+                <th>Volumen Procesado</th>
+                <th>Comisión Promedio</th>
+                <th>Tasa Aprobación</th>
+                <th>Contracargos</th>
+                <th>Recomendación</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>Tarjetas Crédito / Débito (Stripe)</b></td>
+                <td class="mono-cell" style="color:var(--accent-blue); font-weight:700;">$2.95 M</td>
+                <td class="mono-cell">2.9% + $0.30</td>
+                <td class="mono-cell" style="color:var(--accent-green);">97.4%</td>
+                <td class="mono-cell">0.12%</td>
+                <td><span class="status-badge status-success">Canal Principal</span></td>
+              </tr>
+              <tr>
+                <td><b>PayPal Express</b></td>
+                <td class="mono-cell">$1.12 M</td>
+                <td class="mono-cell">3.4% + $0.25</td>
+                <td class="mono-cell">95.8%</td>
+                <td class="mono-cell">0.25%</td>
+                <td><span class="status-badge status-info">Mantener</span></td>
+              </tr>
+              <tr>
+                <td><b>Transferencia Directa (SPEI / Wire)</b></td>
+                <td class="mono-cell">$680 K</td>
+                <td class="mono-cell">0.5% fijo</td>
+                <td class="mono-cell" style="color:var(--accent-green);">99.8%</td>
+                <td class="mono-cell">0.00%</td>
+                <td><span class="status-badge status-success">Incentivar B2B</span></td>
+              </tr>
+              <tr>
+                <td><b>Compre Ahora Pague Después (BNPL)</b></td>
+                <td class="mono-cell">$360 K</td>
+                <td class="mono-cell" style="color:var(--accent-orange);">5.2%</td>
+                <td class="mono-cell">88.9%</td>
+                <td class="mono-cell">0.40%</td>
+                <td><span class="status-badge status-warning">Revisar Comisión</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div>
+        Livingstones Global Analytics &copy; 2024 — Plataforma de Inteligencia E-Commerce
+      </div>
+      <div style="display: flex; gap: 16px;">
+        <span>Estado del Sistema: <b style="color: var(--accent-green);">En Línea</b></span>
+        <span>Latencia API: <b style="color: var(--accent-blue);">38ms</b></span>
+        <span>Versión: <b>v2.4.0-DarkStream</b></span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- SCRIPT CON CHART.JS Y LÓGICA INTERACTIVA -->
+  <script>
+    // Inicializar Iconos Lucide
+    lucide.createIcons();
+
+    // Configuración global de temas para Chart.js
+    Chart.defaults.color = '#7F8CA3';
+    Chart.defaults.font.family = "'Plus Jakarta Sans', system-ui, sans-serif";
+    Chart.defaults.borderColor = 'rgba(28, 39, 62, 0.6)';
+    Chart.defaults.plugins.tooltip.backgroundColor = '#162036';
+    Chart.defaults.plugins.tooltip.titleColor = '#E6EDF7';
+    Chart.defaults.plugins.tooltip.bodyColor = '#E6EDF7';
+    Chart.defaults.plugins.tooltip.borderColor = '#00B3FF';
+    Chart.defaults.plugins.tooltip.borderWidth = 1;
+    Chart.defaults.plugins.tooltip.padding = 10;
+    Chart.defaults.plugins.tooltip.displayColors = true;
+    Chart.defaults.plugins.tooltip.cornerRadius = 8;
+
+    // Control de Pestañas
+    function switchTab(tabId, buttonElement) {
+      document.querySelectorAll('.tab-pane').forEach(pane => {
+        pane.classList.remove('active');
+      });
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      document.getElementById(tabId).classList.add('active');
+      buttonElement.classList.add('active');
+
+      // Re-trigger layout si los gráficos estaban ocultos
+      window.dispatchEvent(new Event('resize'));
+    }
+
+    // 1. Gráfico de Ventas Mensuales (Línea Neón Azul + Outlier Naranja)
+    const ctxMonthly = document.getElementById('monthlySalesChart').getContext('2d');
+    
+    // Gradiente de relleno neón
+    const blueGradient = ctxMonthly.createLinearGradient(0, 0, 0, 300);
+    blueGradient.addColorStop(0, 'rgba(0, 179, 255, 0.28)');
+    blueGradient.addColorStop(1, 'rgba(0, 179, 255, 0.00)');
+
+    const monthlySalesChart = new Chart(ctxMonthly, {
+      type: 'line',
+      data: {
+        labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+        datasets: [{
+          label: 'Facturación ($K USD)',
+          data: [290, 320, 345, 380, 410, 430, 415, 450, 470, 520, 680, 600],
+          borderColor: '#00B3FF',
+          borderWidth: 3,
+          fill: true,
+          backgroundColor: blueGradient,
+          tension: 0.35,
+          pointBackgroundColor: function(context) {
+            // Destacar Noviembre con color naranja neón (outlier / pico)
+            return context.dataIndex === 10 ? '#FF6B1A' : '#00B3FF';
           },
-          "borderRadius": {
-            "DEFAULT": "0.125rem",
-            "lg": "0.25rem",
-            "xl": "0.5rem",
-            "full": "0.75rem"
+          pointBorderColor: function(context) {
+            return context.dataIndex === 10 ? '#FFFFFF' : '#0A0E17';
           },
-          "spacing": {
-            "space-md": "0.875rem",
-            "margin-desktop": "2rem",
-            "space-xs": "0.25rem",
-            "margin-tablet": "1.5rem",
-            "space-sm": "0.5rem",
-            "margin": "1rem",
-            "gutter": "1.25rem",
-            "space-xl": "2rem",
-            "gutter-desktop": "1.5rem",
-            "space-lg": "1.25rem"
+          pointBorderWidth: 2,
+          pointRadius: function(context) {
+            return context.dataIndex === 10 ? 7 : 4;
           },
-          "fontFamily": {
-            "headline-sm": ["Geist", "sans-serif"],
-            "display": ["Geist", "sans-serif"],
-            "headline-lg": ["Geist", "sans-serif"],
-            "body-lg": ["Inter", "sans-serif"],
-            "label-md": ["Geist", "sans-serif"],
-            "headline-md": ["Geist", "sans-serif"],
-            "display-mobile": ["Geist", "sans-serif"],
-            "body-md": ["Inter", "sans-serif"],
-            "numeric-metric": ["Geist", "sans-serif"],
-            "label-sm": ["Geist", "sans-serif"],
-            "body-sm": ["Inter", "sans-serif"]
+          pointHoverRadius: 8
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          y: {
+            grid: { color: 'rgba(28, 39, 62, 0.5)' },
+            ticks: {
+              callback: value => '$' + value + 'K',
+              font: { family: "'JetBrains Mono', monospace" }
+            }
           },
-          "fontSize": {
-            "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
-            "display": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.03em", "fontWeight": "600" }],
-            "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
-            "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
-            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
-            "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
-            "display-mobile": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
-            "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
-            "numeric-metric": ["28px", { "lineHeight": "32px", "letterSpacing": "-0.03em", "fontWeight": "600" }],
-            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }],
-            "body-sm": ["13px", { "lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400" }]
+          x: {
+            grid: { display: false }
           }
         }
       }
-    }
-  </script>
-</head>
-<body class="h-full bg-background text-on-surface antialiased flex overflow-hidden">
-<!-- Streamlit Sidebar (Anchor Component: SideNavBar) -->
-<aside class="fixed top-0 left-0 h-full w-[280px] z-40 bg-surface-container-lowest border-r border-outline-variant flex flex-col justify-between p-space-md transition-transform duration-200" id="sidebar">
-<div class="flex flex-col gap-5 overflow-y-auto pr-1">
-<!-- Brand Monogram & Title -->
-<div class="flex items-center gap-3 pb-3 border-b border-surface-container">
-<div class="w-8 h-8 rounded bg-primary text-on-primary flex items-center justify-center font-headline-sm text-headline-sm">
-          L
-        </div>
-<div class="flex flex-col">
-<span class="font-headline-sm text-headline-sm font-semibold tracking-tight text-on-surface">Livingstones Global</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant">Global Commerce Suite · v2.4</span>
-</div>
-</div>
-<!-- Navigation Tabs (from Shared Components JSON: SideNavBar) -->
-<nav class="flex flex-col gap-1">
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors duration-150" href="#">
-<span class="material-symbols-outlined text-[18px]">dashboard</span>
-<span class="font-label-md text-label-md">Dashboard / Overview</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-surface-container-high text-on-surface font-medium active:scale-[0.99] transition-transform duration-100" href="#">
-<span class="material-symbols-outlined text-[18px]">inventory_2</span>
-<span class="font-label-md text-label-md">Product Catalog</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors duration-150" href="#">
-<span class="material-symbols-outlined text-[18px]">warehouse</span>
-<span class="font-label-md text-label-md">Inventory &amp; Stock</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors duration-150" href="#">
-<span class="material-symbols-outlined text-[18px]">shopping_bag</span>
-<span class="font-label-md text-label-md">Order Management</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors duration-150" href="#">
-<span class="material-symbols-outlined text-[18px]">analytics</span>
-<span class="font-label-md text-label-md">Analytics &amp; Insights</span>
-</a>
-</nav>
-<!-- Streamlit Widgets / Filters section -->
-<div class="pt-2 flex flex-col gap-4 border-t border-surface-container">
-<span class="font-label-sm text-label-sm text-on-surface-variant tracking-wider">FILTROS DEL SISTEMA</span>
-<!-- st.selectbox -->
-<div class="flex flex-col gap-1.5">
-<label class="font-label-md text-label-md text-on-surface">Categoría</label>
-<div class="relative">
-<select class="w-full h-9 bg-surface-container-lowest border border-outline-variant rounded-lg px-2.5 font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-primary appearance-none cursor-pointer">
-<option>Luxury Apparel</option>
-<option>Minimal Horology</option>
-<option>Leather Goods</option>
-<option>Home Objects</option>
-</select>
-<span class="material-symbols-outlined absolute right-2.5 top-2 pointer-events-none text-on-surface-variant text-[18px]">expand_more</span>
-</div>
-</div>
-<!-- st.slider -->
-<div class="flex flex-col gap-1.5">
-<div class="flex justify-between items-center font-label-md text-label-md">
-<span class="text-on-surface">Rango de Precio</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant" id="price-range-val">$100 - $3,500</span>
-</div>
-<input class="w-full accent-primary h-1 bg-surface-container-high rounded cursor-pointer" max="3500" min="100" oninput="document.getElementById('price-range-val').innerText = '$100 - $' + Number(this.value).toLocaleString()" type="range" value="2800"/>
-<div class="flex justify-between text-[10px] text-outline">
-<span>$100</span>
-<span>$3,500</span>
-</div>
-</div>
-<!-- st.multiselect -->
-<div class="flex flex-col gap-1.5">
-<label class="font-label-md text-label-md text-on-surface">Mercados Activos</label>
-<div class="flex flex-wrap gap-1.5 p-2 bg-surface-container-lowest border border-outline-variant rounded-lg">
-<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-on-surface">
-              North America
-              <span class="material-symbols-outlined text-[12px] cursor-pointer hover:text-error">close</span>
-</span>
-<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-on-surface">
-              Europe
-              <span class="material-symbols-outlined text-[12px] cursor-pointer hover:text-error">close</span>
-</span>
-<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-on-surface">
-              Asia Pacific
-              <span class="material-symbols-outlined text-[12px] cursor-pointer hover:text-error">close</span>
-</span>
-</div>
-</div>
-<!-- st.toggle -->
-<div class="flex items-center justify-between py-1">
-<label class="font-label-md text-label-md text-on-surface cursor-pointer select-none" for="stock-toggle">Solo en Stock</label>
-<label class="relative inline-flex items-center cursor-pointer">
-<input checked="" class="sr-only peer" id="stock-toggle" type="checkbox"/>
-<div class="w-9 h-5 bg-surface-container-high peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-surface-container-lowest after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface-container-lowest after:border-outline-variant after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
-</label>
-</div>
-<!-- st.button CTA -->
-<button class="w-full h-9 bg-primary hover:bg-inverse-surface active:scale-[0.99] text-on-primary font-label-md text-label-md rounded-lg flex items-center justify-center gap-2 transition duration-150">
-<span class="material-symbols-outlined text-[16px]">tune</span>
-          Apply Filters
-        </button>
-</div>
-</div>
-<!-- Sidebar Footer -->
-<div class="pt-3 border-t border-surface-container flex flex-col gap-2">
-<div class="flex items-center justify-between">
-<a class="flex items-center gap-2 text-on-surface-variant hover:text-on-surface font-label-md text-label-md" href="#">
-<span class="material-symbols-outlined text-[16px]">settings</span>
-          Settings
-        </a>
-<a class="flex items-center gap-2 text-on-surface-variant hover:text-on-surface font-label-md text-label-md" href="#">
-<span class="material-symbols-outlined text-[16px]">help_outline</span>
-          Documentation
-        </a>
-</div>
-<div class="flex items-center gap-2 pt-2 px-1">
-<div class="w-6 h-6 rounded-full bg-surface-container-high flex items-center justify-center font-label-sm text-label-sm text-on-surface font-medium">
-          A
-        </div>
-<div class="flex flex-col truncate">
-<span class="font-label-sm text-label-sm text-on-surface truncate">livingstones.admin@global.com</span>
-<span class="font-label-sm text-[10px] text-outline leading-tight">Master Merchant Account</span>
-</div>
-</div>
-</div>
-</aside>
-<!-- Main Canvas Wrapper -->
-<div class="flex-1 flex flex-col pl-[280px] h-full overflow-hidden bg-background">
-<!-- Streamlit Top Bar (Anchor Component: TopNavBar) -->
-<header class="fixed top-0 right-0 left-[280px] h-12 z-30 bg-surface-container-lowest border-b border-outline-variant flex justify-between items-center px-gutter-desktop">
-<div class="flex items-center gap-4">
-<button class="p-1 text-on-surface-variant hover:text-on-surface rounded hover:bg-surface-container transition-colors" id="sidebar-toggle">
-<span class="material-symbols-outlined text-[20px]">menu</span>
-</button>
-<div class="flex items-center gap-2">
-<span class="inline-block w-2 h-2 rounded-full bg-secondary"></span>
-<span class="font-label-sm text-label-sm text-on-surface">Conectado a Live DB</span>
-</div>
-<span class="text-outline-variant text-[12px]">|</span>
-<div class="flex items-center gap-3 font-label-md text-label-md">
-<a class="text-on-surface font-semibold" href="#">Workspace</a>
-<a class="text-on-surface-variant hover:text-on-surface" href="#">Production</a>
-<a class="text-on-surface-variant hover:text-on-surface" href="#">Live Data</a>
-</div>
-</div>
-<div class="flex items-center gap-3">
-<div class="flex items-center gap-1">
-<button class="h-8 px-2.5 bg-surface-container-lowest border border-outline-variant hover:bg-surface-container text-on-surface font-label-md text-label-md rounded-lg flex items-center gap-1.5 transition-colors" title="Descargar CSV">
-<span class="material-symbols-outlined text-[16px]">download</span>
-            Descargar CSV
-          </button>
-<button class="h-8 px-3 bg-primary hover:bg-inverse-surface text-on-primary font-label-md text-label-md rounded-lg flex items-center gap-1.5 transition-colors">
-<span class="material-symbols-outlined text-[16px]">ios_share</span>
-            Deploy / Share
-          </button>
-</div>
-<span class="text-outline-variant text-[12px]">|</span>
-<div class="flex items-center gap-1 text-on-surface-variant">
-<button class="p-1 hover:text-on-surface rounded hover:bg-surface-container" title="Pantalla Completa">
-<span class="material-symbols-outlined text-[18px]">fullscreen</span>
-</button>
-<button class="p-1 hover:text-on-surface rounded hover:bg-surface-container" title="Ajustes">
-<span class="material-symbols-outlined text-[18px]">settings</span>
-</button>
-<button class="p-1 hover:text-on-surface rounded hover:bg-surface-container" title="Notificaciones">
-<span class="material-symbols-outlined text-[18px]">notifications</span>
-</button>
-</div>
-</div>
-</header>
-<!-- Main Scrollable Content Area -->
-<main class="flex-1 overflow-y-auto mt-12 p-gutter-desktop flex flex-col gap-6">
-<!-- Streamlit Title & Introduction -->
-<section class="flex flex-col gap-1">
-<div class="flex items-center justify-between">
-<h1 class="font-display text-display text-on-surface font-semibold tracking-tight">Livingstones Global · Catálogo y Operaciones de E-Commerce</h1>
-<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container font-label-sm text-label-sm text-on-surface-variant border border-outline-variant">
-<span class="material-symbols-outlined text-[14px]">tune</span>
-            Filtros Aplicados (4)
-          </span>
-</div>
-<p class="font-body-md text-body-md text-on-surface-variant max-w-3xl">
-          Consola analítica unificada para inventario transfronterizo, gestión de pedidos de lujo y telemetría de distribución minorista en tiempo real.
-        </p>
-</section>
-<!-- st.metric Row (4 Cards) -->
-<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-<!-- Metric 1 -->
-<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 flex flex-col gap-1 hover:border-outline transition-colors">
-<div class="flex items-center justify-between">
-<span class="font-label-md text-label-md text-on-surface-variant">Ingresos Brutos (MTD)</span>
-<span class="material-symbols-outlined text-outline text-[18px]">payments</span>
-</div>
-<div class="font-numeric-metric text-numeric-metric text-on-surface mt-1">$482,950</div>
-<div class="flex items-center gap-1.5 mt-1 font-label-sm text-label-sm text-secondary">
-<span class="material-symbols-outlined text-[16px]">trending_up</span>
-<span>+14.8% vs mes anterior</span>
-</div>
-</div>
-<!-- Metric 2 -->
-<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 flex flex-col gap-1 hover:border-outline transition-colors">
-<div class="flex items-center justify-between">
-<span class="font-label-md text-label-md text-on-surface-variant">Pedidos Activos</span>
-<span class="material-symbols-outlined text-outline text-[18px]">local_shipping</span>
-</div>
-<div class="font-numeric-metric text-numeric-metric text-on-surface mt-1">1,284</div>
-<div class="flex items-center gap-1.5 mt-1 font-label-sm text-label-sm text-secondary">
-<span class="material-symbols-outlined text-[16px]">trending_up</span>
-<span>+5.2% en despacho</span>
-</div>
-</div>
-<!-- Metric 3 -->
-<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 flex flex-col gap-1 hover:border-outline transition-colors">
-<div class="flex items-center justify-between">
-<span class="font-label-md text-label-md text-on-surface-variant">SKUs en Catálogo</span>
-<span class="material-symbols-outlined text-outline text-[18px]">inventory</span>
-</div>
-<div class="font-numeric-metric text-numeric-metric text-on-surface mt-1">348</div>
-<div class="flex items-center gap-1.5 mt-1 font-label-sm text-label-sm text-on-surface-variant">
-<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
-<span>98% en inventario óptimo</span>
-</div>
-</div>
-<!-- Metric 4 -->
-<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 flex flex-col gap-1 hover:border-outline transition-colors">
-<div class="flex items-center justify-between">
-<span class="font-label-md text-label-md text-on-surface-variant">Ticket Promedio (AOV)</span>
-<span class="material-symbols-outlined text-outline text-[18px]">receipt_long</span>
-</div>
-<div class="font-numeric-metric text-numeric-metric text-on-surface mt-1">$376.10</div>
-<div class="flex items-center gap-1.5 mt-1 font-label-sm text-label-sm text-secondary">
-<span class="material-symbols-outlined text-[16px]">trending_up</span>
-<span>+2.4% cesta global</span>
-</div>
-</div>
-</section>
-<!-- st.tabs Navigation -->
-<section class="flex flex-col gap-4">
-<div class="border-b border-outline-variant flex items-center gap-6">
-<button class="pb-3 border-b-2 border-primary font-headline-sm text-headline-sm text-on-surface flex items-center gap-2">
-<span class="material-symbols-outlined text-[18px]">inventory_2</span>
-            Catálogo de Productos
-          </button>
-<button class="pb-3 border-b-2 border-transparent font-headline-sm text-headline-sm text-on-surface-variant hover:text-on-surface flex items-center gap-2 transition-colors">
-<span class="material-symbols-outlined text-[18px]">analytics</span>
-            Análisis de Ventas
-          </button>
-<button class="pb-3 border-b-2 border-transparent font-headline-sm text-headline-sm text-on-surface-variant hover:text-on-surface flex items-center gap-2 transition-colors">
-<span class="material-symbols-outlined text-[18px]">receipt</span>
-            Pedidos Recientes
-          </button>
-</div>
-<!-- Interactive Toolbar inside Active Tab -->
-<div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 bg-surface-container-lowest p-3 border border-outline-variant rounded-xl">
-<div class="relative flex-1 max-w-md">
-<span class="material-symbols-outlined absolute left-3 top-2 text-on-surface-variant text-[18px]">search</span>
-<input class="w-full h-8 pl-9 pr-3 bg-surface-container-low border border-outline-variant rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:border-primary" placeholder="Buscar por SKU, título o material..." type="text"/>
-</div>
-<div class="flex items-center gap-2">
-<label class="font-label-sm text-label-sm text-on-surface-variant whitespace-nowrap">Ordenar por:</label>
-<select class="h-8 bg-surface-container-low border border-outline-variant rounded-lg px-2.5 font-label-md text-label-md text-on-surface focus:outline-none focus:border-primary appearance-none pr-8 relative cursor-pointer">
-<option>Mayor precio</option>
-<option>Novedades</option>
-<option>Mayor margen</option>
-<option>Stock crítico</option>
-</select>
-<button class="h-8 px-3 bg-surface-container hover:bg-surface-container-high rounded-lg text-on-surface font-label-md text-label-md flex items-center gap-1.5 transition-colors border border-outline-variant">
-<span class="material-symbols-outlined text-[16px]">filter_list</span>
-              Vista: Galería
-            </button>
-</div>
-</div>
-<!-- Minimalist Product Cards Grid (4 Items) -->
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-<!-- Product Card 1 -->
-<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden flex flex-col group hover:border-outline transition-all duration-150">
-<div class="aspect-[4/3] bg-surface-container-low overflow-hidden relative">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="A pristine luxury minimalist mechanical wristwatch crafted in brushed stainless steel with a slate grey dial and sapphire glass, positioned on a clean white monolithic surface in a minimalist studio setting with architectural soft daylight illumination. The atmosphere is quiet, technological, and refined, adhering to high-end executive product catalog aesthetics." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKqkZZ9Ul1iUEbkEEj25oWO57jd10piG_25F6v1jm5ONRSLwkJwVanOU1VvIChzjaWawbqLjp7ch18r8VWGUXEOz_QjHlJ6JYC5ULryhrsK3ZUNXG3mGh41sqwMV5gCAHqEuCC9YM5mtxFTE_Nx29lwS5TVyxqD6UFVVqb2LaFYVlpUz6NJJeCro3mts6YtPPXoFJwN2GkHsykFWUrT29ffmd3Y8KOkQHteiwZ7IQ"/>
-<span class="absolute top-2.5 right-2.5 px-2 py-0.5 rounded bg-surface-container-lowest/90 backdrop-blur font-label-sm text-label-sm text-on-surface border border-outline-variant">
-                En stock (42)
-              </span>
-</div>
-<div class="p-3.5 flex flex-col flex-1 justify-between gap-3">
-<div class="flex flex-col gap-1">
-<span class="font-label-sm text-label-sm text-outline">SKU: LG-HOR-089</span>
-<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary">Cronógrafo Automático Vanguard</h3>
-<span class="font-body-sm text-body-sm text-on-surface-variant">Minimal Horology · 40mm Acero 904L</span>
-</div>
-<div class="flex items-center justify-between pt-2 border-t border-surface-container">
-<div class="flex flex-col">
-<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">$2,450.00</span>
-<span class="font-label-sm text-label-sm text-secondary">Margen: 46.2%</span>
-</div>
-<button class="h-7 px-2.5 border border-outline-variant rounded hover:bg-surface-container text-on-surface font-label-sm text-label-sm transition-colors">
-                  Detalles
-                </button>
-</div>
-</div>
-</div>
-<!-- Product Card 2 -->
-<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden flex flex-col group hover:border-outline transition-all duration-150">
-<div class="aspect-[4/3] bg-surface-container-low overflow-hidden relative">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="An artisanal Italian full-grain leather briefcase in deep espresso brown, featuring brushed brass hardware and hand-stitched edges, resting on a stark light grey stone plinth in a high-fashion editorial gallery. Soft neutral shadows and crisp diffuse morning studio light enhance the rich tactile leather texture and structural elegance." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2AcJtGVW5j54_5_XAUJFPxaq4vx0m1ZKRK39icskvfhHlm28gq7RBtfbxESbeboDjZJLmvi9ioqOyZV5ckYovuwxXJtwkholDMscgb98oTJZmuoTe_YnEo_YrDOMaIbhEyhh2MlE-GZxUDm5I2HW56F_HUJhD1hBgz00kbR0j3xGMSFSziPdWhZtudRoGLXuprXNHlskVDuEt7FEDeTUDn1hvk0m8Bh-Pt8AvpMY"/>
-<span class="absolute top-2.5 right-2.5 px-2 py-0.5 rounded bg-surface-container-lowest/90 backdrop-blur font-label-sm text-label-sm text-on-surface border border-outline-variant">
-                En stock (18)
-              </span>
-</div>
-<div class="p-3.5 flex flex-col flex-1 justify-between gap-3">
-<div class="flex flex-col gap-1">
-<span class="font-label-sm text-label-sm text-outline">SKU: LG-LTH-401</span>
-<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary">Maletín Ejecutivo Florencia</h3>
-<span class="font-body-sm text-body-sm text-on-surface-variant">Leather Goods · Cuero Vacuno Italiano</span>
-</div>
-<div class="flex items-center justify-between pt-2 border-t border-surface-container">
-<div class="flex flex-col">
-<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">$1,280.00</span>
-<span class="font-label-sm text-label-sm text-secondary">Margen: 52.8%</span>
-</div>
-<button class="h-7 px-2.5 border border-outline-variant rounded hover:bg-surface-container text-on-surface font-label-sm text-label-sm transition-colors">
-                  Detalles
-                </button>
-</div>
-</div>
-</div>
-<!-- Product Card 3 -->
-<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden flex flex-col group hover:border-outline transition-all duration-150">
-<div class="aspect-[4/3] bg-surface-container-low overflow-hidden relative">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="A luxurious bespoke crewneck knit sweater crafted from pure Mongolian cashmere in a refined oatmeal tone, meticulously draped on a sculptural minimalist mannequin against a clean off-white background. The lighting is subtle, balanced, and editorial, creating velvety textures with sharp silhouettes that highlight premium textile manufacturing." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQjGC1tRzO4Q2V-_qAKhaBzHj5Hj1k6nsaJEntPhIe2yJHr9zKTcxUt-frRysPsD2e77TGjRa0nF-W79kVnd3IRL62nygsX-yc1qJVDsVtY3HdHu1O7YBryS2EwpAjBM6kVeCCn1cZ6pm1m6JhSd55nCbUIAP2lRxgg4UVhZXqWj-i0nryFpsn1XoDz0Gn_R-OWTRqTUL5pvhK5CHdSz5Gg8DAd-D3fXXDn5CkBc4"/>
-<span class="absolute top-2.5 right-2.5 px-2 py-0.5 rounded bg-amber-50 text-amber-700 font-label-sm text-label-sm border border-amber-200">
-                Bajo pedido (5)
-              </span>
-</div>
-<div class="p-3.5 flex flex-col flex-1 justify-between gap-3">
-<div class="flex flex-col gap-1">
-<span class="font-label-sm text-label-sm text-outline">SKU: LG-APP-112</span>
-<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary">Jersey Cachemira Nórdico</h3>
-<span class="font-body-sm text-body-sm text-on-surface-variant">Luxury Apparel · 100% Cachemira 3-ply</span>
-</div>
-<div class="flex items-center justify-between pt-2 border-t border-surface-container">
-<div class="flex flex-col">
-<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">$790.00</span>
-<span class="font-label-sm text-label-sm text-secondary">Margen: 61.0%</span>
-</div>
-<button class="h-7 px-2.5 border border-outline-variant rounded hover:bg-surface-container text-on-surface font-label-sm text-label-sm transition-colors">
-                  Detalles
-                </button>
-</div>
-</div>
-</div>
-<!-- Product Card 4 -->
-<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden flex flex-col group hover:border-outline transition-all duration-150">
-<div class="aspect-[4/3] bg-surface-container-low overflow-hidden relative">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Sculptural designer titanium sunglasses with dark polarized gradient lenses, posed on an unpolished raw travertine stone block in a modernist minimalist room bathed in bright architectural morning light. Pure geometric lines and pristine metallic reflections embody restrained luxury and technological precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbczK1sgXZMbDIQJALVhIB2Ktr1u6vy-7uwu4qLhokCSqssW308itxvTOjB_bfEaC7p4ygcK2wU_Yr1bwdRbILKhdclxCEMsylWvR4MeoDG3oz0-ERTg6SO1ALqF_bro3h8PtgnYijK-k5XCtOc90zUlUFjDtuBugzOzQSEtfwsZwwnqj_y5F8bJrZ3kHk3nxBuyS-DqKkBnNNy7xFKHIhwW-uj5bxY0t_BcK9L6g"/>
-<span class="absolute top-2.5 right-2.5 px-2 py-0.5 rounded bg-surface-container-lowest/90 backdrop-blur font-label-sm text-label-sm text-on-surface border border-outline-variant">
-                En stock (64)
-              </span>
-</div>
-<div class="p-3.5 flex flex-col flex-1 justify-between gap-3">
-<div class="flex flex-col gap-1">
-<span class="font-label-sm text-label-sm text-outline">SKU: LG-OPT-504</span>
-<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary">Gafas de Sol Titanio Éter</h3>
-<span class="font-body-sm text-body-sm text-on-surface-variant">Luxury Apparel · Titanio Beta Japonés</span>
-</div>
-<div class="flex items-center justify-between pt-2 border-t border-surface-container">
-<div class="flex flex-col">
-<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">$540.00</span>
-<span class="font-label-sm text-label-sm text-secondary">Margen: 58.5%</span>
-</div>
-<button class="h-7 px-2.5 border border-outline-variant rounded hover:bg-surface-container text-on-surface font-label-sm text-label-sm transition-colors">
-                  Detalles
-                </button>
-</div>
-</div>
-</div>
-</div>
-<!-- st.dataframe Interactive Data Table -->
-<div class="mt-2 bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden flex flex-col">
-<div class="px-4 py-3 border-b border-surface-container flex items-center justify-between bg-surface-container-low/50">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-[18px] text-outline">table_chart</span>
-<span class="font-headline-sm text-headline-sm text-on-surface">Dataframe: Registro Integral de Inventario Activo</span>
-</div>
-<span class="font-label-sm text-label-sm text-on-surface-variant">Mostrando 4 de 348 registros</span>
-</div>
-<div class="overflow-x-auto">
-<table class="w-full text-left border-collapse">
-<thead>
-<tr class="h-10 bg-surface-container-low border-b border-outline-variant">
-<th class="px-4 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">SKU</th>
-<th class="px-4 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Producto</th>
-<th class="px-4 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Categoría</th>
-<th class="px-4 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider text-right">Stock Disp.</th>
-<th class="px-4 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider text-right">Precio Unitario</th>
-<th class="px-4 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider text-center">Estado</th>
-<th class="px-4 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider text-right">Acciones</th>
-</tr>
-</thead>
-<tbody class="divide-y divide-surface-container font-body-sm text-body-sm">
-<tr class="h-12 hover:bg-surface-container-low/50 transition-colors">
-<td class="px-4 font-mono text-[12px] font-medium text-on-surface">LG-HOR-089</td>
-<td class="px-4 font-medium text-on-surface">Cronógrafo Automático Vanguard</td>
-<td class="px-4 text-on-surface-variant">Minimal Horology</td>
-<td class="px-4 text-right font-numeric-metric text-[14px]">42 uds</td>
-<td class="px-4 text-right font-numeric-metric text-[14px]">$2,450.00</td>
-<td class="px-4 text-center">
-<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-teal-50 border border-teal-200 text-teal-800 font-label-sm text-label-sm">
-<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
-                      En stock
-                    </span>
-</td>
-<td class="px-4 text-right">
-<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant hover:text-on-surface">
-<span class="material-symbols-outlined text-[16px]">edit</span>
-</button>
-</td>
-</tr>
-<tr class="h-12 hover:bg-surface-container-low/50 transition-colors">
-<td class="px-4 font-mono text-[12px] font-medium text-on-surface">LG-LTH-401</td>
-<td class="px-4 font-medium text-on-surface">Maletín Ejecutivo Florencia</td>
-<td class="px-4 text-on-surface-variant">Leather Goods</td>
-<td class="px-4 text-right font-numeric-metric text-[14px]">18 uds</td>
-<td class="px-4 text-right font-numeric-metric text-[14px]">$1,280.00</td>
-<td class="px-4 text-center">
-<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-teal-50 border border-teal-200 text-teal-800 font-label-sm text-label-sm">
-<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
-                      En stock
-                    </span>
-</td>
-<td class="px-4 text-right">
-<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant hover:text-on-surface">
-<span class="material-symbols-outlined text-[16px]">edit</span>
-</button>
-</td>
-</tr>
-<tr class="h-12 hover:bg-surface-container-low/50 transition-colors">
-<td class="px-4 font-mono text-[12px] font-medium text-on-surface">LG-APP-112</td>
-<td class="px-4 font-medium text-on-surface">Jersey Cachemira Nórdico</td>
-<td class="px-4 text-on-surface-variant">Luxury Apparel</td>
-<td class="px-4 text-right font-numeric-metric text-[14px]">5 uds</td>
-<td class="px-4 text-right font-numeric-metric text-[14px]">$790.00</td>
-<td class="px-4 text-center">
-<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-amber-50 border border-amber-200 text-amber-800 font-label-sm text-label-sm">
-<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
-                      Bajo pedido
-                    </span>
-</td>
-<td class="px-4 text-right">
-<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant hover:text-on-surface">
-<span class="material-symbols-outlined text-[16px]">edit</span>
-</button>
-</td>
-</tr>
-<tr class="h-12 hover:bg-surface-container-low/50 transition-colors">
-<td class="px-4 font-mono text-[12px] font-medium text-on-surface">LG-OPT-504</td>
-<td class="px-4 font-medium text-on-surface">Gafas de Sol Titanio Éter</td>
-<td class="px-4 text-on-surface-variant">Luxury Apparel</td>
-<td class="px-4 text-right font-numeric-metric text-[14px]">64 uds</td>
-<td class="px-4 text-right font-numeric-metric text-[14px]">$540.00</td>
-<td class="px-4 text-center">
-<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-teal-50 border border-teal-200 text-teal-800 font-label-sm text-label-sm">
-<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
-                      En stock
-                    </span>
-</td>
-<td class="px-4 text-right">
-<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant hover:text-on-surface">
-<span class="material-symbols-outlined text-[16px]">edit</span>
-</button>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
-<!-- Bottom Streamlit Micro-Footer -->
-<footer class="pt-4 pb-6 flex items-center justify-between text-outline border-t border-surface-container text-[11px] font-label-sm">
-<span>Livingstones Global Enterprise Commerce Suite · Connected via Secure WebSocket (TLS 1.3)</span>
-<span>Latencia: 14ms · Región: eu-west-1 (Frankfurt)</span>
-</footer>
-</main>
-</div>
-<!-- Inline Script for micro-interaction -->
-<script>
-    const sidebarToggle = document.getElementById('sidebar-toggle');
-    const sidebar = document.getElementById('sidebar');
-    const mainWrapper = document.querySelector('.pl-\\[280px\\]');
-    const headerWrapper = document.querySelector('.left-\\[280px\\]');
+    });
 
-    let isCollapsed = false;
-
-    sidebarToggle.addEventListener('click', () => {
-      isCollapsed = !isCollapsed;
-      if (isCollapsed) {
-        sidebar.classList.add('-translate-x-full');
-        mainWrapper.classList.remove('pl-[280px]');
-        mainWrapper.classList.add('pl-0');
-        headerWrapper.classList.remove('left-[280px]');
-        headerWrapper.classList.add('left-0');
-      } else {
-        sidebar.classList.remove('-translate-x-full');
-        mainWrapper.classList.add('pl-[280px]');
-        mainWrapper.classList.remove('pl-0');
-        headerWrapper.classList.add('left-[280px]');
-        headerWrapper.classList.remove('left-0');
+    // 2. Gráfico de Categorías (Dona minimalista)
+    const ctxCat = document.getElementById('categoryDistributionChart').getContext('2d');
+    const categoryChart = new Chart(ctxCat, {
+      type: 'doughnut',
+      data: {
+        labels: ['Tecnología y Hardware', 'Muebles & Oficina', 'Software & Licencias', 'Suministros Corporativos', 'Servicios Cloud'],
+        datasets: [{
+          data: [46, 22, 16, 10, 6],
+          backgroundColor: [
+            '#00B3FF',
+            '#FF6B1A',
+            '#8B5CF6',
+            '#10B981',
+            '#3B82F6'
+          ],
+          borderColor: '#0F1524',
+          borderWidth: 3,
+          hoverOffset: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '72%',
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              boxWidth: 10,
+              padding: 14,
+              color: '#E6EDF7',
+              font: { size: 11 }
+            }
+          }
+        }
       }
     });
+
+    // 3. Gráfico de Ventas por Región (Barras Horizontales con acento neón)
+    const ctxRegion = document.getElementById('regionSalesChart').getContext('2d');
+    const regionChart = new Chart(ctxRegion, {
+      type: 'bar',
+      data: {
+        labels: ['Norteamérica (US & CA)', 'Europa Central', 'Latinoamérica (MX, CO, CL)', 'Asia Pacífico', 'Reino Unido & Nórdicos'],
+        datasets: [{
+          label: 'Ventas Acumuladas ($K)',
+          data: [2150, 1340, 780, 520, 320],
+          backgroundColor: function(context) {
+            // Norteamérica como líder en azul, resto con tono elegante y Latam con naranja
+            if (context.dataIndex === 0) return '#00B3FF';
+            if (context.dataIndex === 2) return '#FF6B1A';
+            return 'rgba(0, 179, 255, 0.45)';
+          },
+          borderRadius: 6,
+          borderWidth: 0
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        indexAxis: 'y',
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          x: {
+            grid: { color: 'rgba(28, 39, 62, 0.5)' },
+            ticks: {
+              callback: value => '$' + value + 'K',
+              font: { family: "'JetBrains Mono', monospace" }
+            }
+          },
+          y: {
+            grid: { display: false },
+            ticks: { color: '#E6EDF7' }
+          }
+        }
+      }
+    });
+
+    // Pestaña 2: Descuentos vs Margen
+    const ctxDisc = document.getElementById('discountsChart').getContext('2d');
+    const discountsChart = new Chart(ctxDisc, {
+      type: 'bar',
+      data: {
+        labels: ['0% Descuento', '1% - 5%', '6% - 10%', '11% - 15%', '16% - 20%', '> 20% (Promocional)'],
+        datasets: [
+          {
+            label: 'Volumen Facturado ($K)',
+            data: [1420, 1850, 960, 480, 260, 140],
+            backgroundColor: 'rgba(0, 179, 255, 0.65)',
+            borderRadius: 6
+          },
+          {
+            label: 'Margen Promedio (%)',
+            type: 'line',
+            data: [42, 38, 33, 27, 21, 14],
+            borderColor: '#FF6B1A',
+            borderWidth: 3,
+            pointBackgroundColor: '#FF6B1A',
+            yAxisID: 'y1'
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            labels: { color: '#E6EDF7' }
+          }
+        },
+        scales: {
+          y: {
+            grid: { color: 'rgba(28, 39, 62, 0.5)' },
+            ticks: { callback: v => '$' + v + 'K' }
+          },
+          y1: {
+            position: 'right',
+            grid: { display: false },
+            ticks: { callback: v => v + '%' }
+          },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+
+    // Pestaña 2: SLA Logístico
+    const ctxSla = document.getElementById('slaChart').getContext('2d');
+    const slaChart = new Chart(ctxSla, {
+      type: 'line',
+      data: {
+        labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+        datasets: [
+          {
+            label: 'Tiempo Promedio (Días)',
+            data: [3.4, 3.2, 3.1, 2.9, 2.8, 2.7, 2.8, 2.6, 2.5, 2.4, 3.2, 2.7],
+            borderColor: '#00B3FF',
+            borderWidth: 2.5,
+            pointBackgroundColor: '#00B3FF',
+            tension: 0.3
+          },
+          {
+            label: 'Meta SLA (3.0 Días)',
+            data: [3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0],
+            borderColor: '#FF6B1A',
+            borderWidth: 1.5,
+            borderDash: [6, 4],
+            pointRadius: 0
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { labels: { color: '#E6EDF7' } }
+        },
+        scales: {
+          y: {
+            min: 2,
+            max: 4.5,
+            grid: { color: 'rgba(28, 39, 62, 0.5)' },
+            ticks: { callback: v => v + ' d' }
+          },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+
+    // Pestaña 3: Medios de Pago
+    const ctxPay = document.getElementById('paymentMethodsChart').getContext('2d');
+    const paymentChart = new Chart(ctxPay, {
+      type: 'doughnut',
+      data: {
+        labels: ['Tarjetas Crédito/Débito', 'PayPal', 'Transferencias Directas', 'BNPL (Cuotas)', 'Otros'],
+        datasets: [{
+          data: [58, 22, 13, 5, 2],
+          backgroundColor: ['#00B3FF', '#3B82F6', '#10B981', '#FF6B1A', '#6B7280'],
+          borderColor: '#0F1524',
+          borderWidth: 3,
+          cutout: '65%'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: { color: '#E6EDF7', boxWidth: 12, padding: 12 }
+          }
+        }
+      }
+    });
+
+    // Pestaña 3: Retención Nuevos vs Recurrentes
+    const ctxRet = document.getElementById('customerRetentionChart').getContext('2d');
+    const retentionChart = new Chart(ctxRet, {
+      type: 'bar',
+      data: {
+        labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+        datasets: [
+          {
+            label: 'Clientes Recurrentes',
+            data: [680, 820, 940, 1180],
+            backgroundColor: '#00B3FF',
+            borderRadius: 4
+          },
+          {
+            label: 'Nuevos Adquiridos',
+            data: [420, 390, 410, 520],
+            backgroundColor: 'rgba(255, 107, 26, 0.8)',
+            borderRadius: 4
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { labels: { color: '#E6EDF7' } }
+        },
+        scales: {
+          y: {
+            stacked: true,
+            grid: { color: 'rgba(28, 39, 62, 0.5)' }
+          },
+          x: {
+            stacked: true,
+            grid: { display: false }
+          }
+        }
+      }
+    });
+
+    // Función auxiliar para refrescar
+    function refreshDashboard() {
+      const btn = event.currentTarget;
+      btn.style.opacity = '0.5';
+      setTimeout(() => {
+        btn.style.opacity = '1';
+        alert('Dashboard actualizado con métricas en tiempo real.');
+      }, 500);
+    }
   </script>
-</body></html>
+</body>
+</html>
