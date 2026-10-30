@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-background text-on-surface" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Livingstones Global · Global Commerce Suite</title>
+<!-- Google Fonts: Geist & Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 with configuration -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-surface": "#191c1e",
+            "outline-variant": "#c6c6cd",
+            "on-secondary-fixed": "#00201d",
+            "tertiary-fixed-dim": "#b7c8e1",
+            "surface-container": "#eceef0",
+            "primary-fixed": "#dae2fd",
+            "on-secondary": "#ffffff",
+            "tertiary-container": "#0b1c30",
+            "error": "#ba1a1a",
+            "on-primary": "#ffffff",
+            "surface-tint": "#565e74",
+            "outline": "#76777d",
+            "error-container": "#ffdad6",
+            "surface-container-high": "#e6e8ea",
+            "primary-fixed-dim": "#bec6e0",
+            "on-tertiary": "#ffffff",
+            "on-tertiary-fixed-variant": "#38485d",
+            "primary": "#000000",
+            "surface-container-highest": "#e0e3e5",
+            "surface-variant": "#e0e3e5",
+            "on-primary-container": "#7c839b",
+            "surface-dim": "#d8dadc",
+            "tertiary": "#000000",
+            "on-secondary-fixed-variant": "#005049",
+            "primary-container": "#131b2e",
+            "secondary-fixed": "#89f5e7",
+            "on-primary-fixed": "#131b2e",
+            "inverse-primary": "#bec6e0",
+            "inverse-surface": "#2d3133",
+            "background": "#f7f9fb",
+            "tertiary-fixed": "#d3e4fe",
+            "surface-container-low": "#f2f4f6",
+            "on-secondary-container": "#006f66",
+            "on-background": "#191c1e",
+            "surface-bright": "#f7f9fb",
+            "on-primary-fixed-variant": "#3f465c",
+            "secondary": "#006a61",
+            "surface-container-lowest": "#ffffff",
+            "secondary-fixed-dim": "#6bd8cb",
+            "secondary-container": "#86f2e4",
+            "on-tertiary-fixed": "#0b1c30",
+            "surface": "#f7f9fb",
+            "on-tertiary-container": "#75859d",
+            "inverse-on-surface": "#eff1f3",
+            "on-error-container": "#93000a",
+            "on-error": "#ffffff",
+            "on-surface-variant": "#45464d"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-md": "0.875rem",
+            "margin-desktop": "2rem",
+            "space-xs": "0.25rem",
+            "margin-tablet": "1.5rem",
+            "space-sm": "0.5rem",
+            "margin": "1rem",
+            "gutter": "1.25rem",
+            "space-xl": "2rem",
+            "gutter-desktop": "1.5rem",
+            "space-lg": "1.25rem"
+          },
+          "fontFamily": {
+            "headline-sm": ["Geist", "sans-serif"],
+            "display": ["Geist", "sans-serif"],
+            "headline-lg": ["Geist", "sans-serif"],
+            "body-lg": ["Inter", "sans-serif"],
+            "label-md": ["Geist", "sans-serif"],
+            "headline-md": ["Geist", "sans-serif"],
+            "display-mobile": ["Geist", "sans-serif"],
+            "body-md": ["Inter", "sans-serif"],
+            "numeric-metric": ["Geist", "sans-serif"],
+            "label-sm": ["Geist", "sans-serif"],
+            "body-sm": ["Inter", "sans-serif"]
+          },
+          "fontSize": {
+            "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "display": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.03em", "fontWeight": "600" }],
+            "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "display-mobile": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "numeric-metric": ["28px", { "lineHeight": "32px", "letterSpacing": "-0.03em", "fontWeight": "600" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="h-full bg-background text-on-surface antialiased flex overflow-hidden">
+<!-- Streamlit Sidebar (Anchor Component: SideNavBar) -->
+<aside class="fixed top-0 left-0 h-full w-[280px] z-40 bg-surface-container-lowest border-r border-outline-variant flex flex-col justify-between p-space-md transition-transform duration-200" id="sidebar">
+<div class="flex flex-col gap-5 overflow-y-auto pr-1">
+<!-- Brand Monogram & Title -->
+<div class="flex items-center gap-3 pb-3 border-b border-surface-container">
+<div class="w-8 h-8 rounded bg-primary text-on-primary flex items-center justify-center font-headline-sm text-headline-sm">
+          L
+        </div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm font-semibold tracking-tight text-on-surface">Livingstones Global</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Global Commerce Suite · v2.4</span>
+</div>
+</div>
+<!-- Navigation Tabs (from Shared Components JSON: SideNavBar) -->
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[18px]">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard / Overview</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-surface-container-high text-on-surface font-medium active:scale-[0.99] transition-transform duration-100" href="#">
+<span class="material-symbols-outlined text-[18px]">inventory_2</span>
+<span class="font-label-md text-label-md">Product Catalog</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[18px]">warehouse</span>
+<span class="font-label-md text-label-md">Inventory &amp; Stock</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[18px]">shopping_bag</span>
+<span class="font-label-md text-label-md">Order Management</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[18px]">analytics</span>
+<span class="font-label-md text-label-md">Analytics &amp; Insights</span>
+</a>
+</nav>
+<!-- Streamlit Widgets / Filters section -->
+<div class="pt-2 flex flex-col gap-4 border-t border-surface-container">
+<span class="font-label-sm text-label-sm text-on-surface-variant tracking-wider">FILTROS DEL SISTEMA</span>
+<!-- st.selectbox -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface">Categoría</label>
+<div class="relative">
+<select class="w-full h-9 bg-surface-container-lowest border border-outline-variant rounded-lg px-2.5 font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-primary appearance-none cursor-pointer">
+<option>Luxury Apparel</option>
+<option>Minimal Horology</option>
+<option>Leather Goods</option>
+<option>Home Objects</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-2 pointer-events-none text-on-surface-variant text-[18px]">expand_more</span>
+</div>
+</div>
+<!-- st.slider -->
+<div class="flex flex-col gap-1.5">
+<div class="flex justify-between items-center font-label-md text-label-md">
+<span class="text-on-surface">Rango de Precio</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant" id="price-range-val">$100 - $3,500</span>
+</div>
+<input class="w-full accent-primary h-1 bg-surface-container-high rounded cursor-pointer" max="3500" min="100" oninput="document.getElementById('price-range-val').innerText = '$100 - $' + Number(this.value).toLocaleString()" type="range" value="2800"/>
+<div class="flex justify-between text-[10px] text-outline">
+<span>$100</span>
+<span>$3,500</span>
+</div>
+</div>
+<!-- st.multiselect -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface">Mercados Activos</label>
+<div class="flex flex-wrap gap-1.5 p-2 bg-surface-container-lowest border border-outline-variant rounded-lg">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-on-surface">
+              North America
+              <span class="material-symbols-outlined text-[12px] cursor-pointer hover:text-error">close</span>
+</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-on-surface">
+              Europe
+              <span class="material-symbols-outlined text-[12px] cursor-pointer hover:text-error">close</span>
+</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-on-surface">
+              Asia Pacific
+              <span class="material-symbols-outlined text-[12px] cursor-pointer hover:text-error">close</span>
+</span>
+</div>
+</div>
+<!-- st.toggle -->
+<div class="flex items-center justify-between py-1">
+<label class="font-label-md text-label-md text-on-surface cursor-pointer select-none" for="stock-toggle">Solo en Stock</label>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" id="stock-toggle" type="checkbox"/>
+<div class="w-9 h-5 bg-surface-container-high peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-surface-container-lowest after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface-container-lowest after:border-outline-variant after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- st.button CTA -->
+<button class="w-full h-9 bg-primary hover:bg-inverse-surface active:scale-[0.99] text-on-primary font-label-md text-label-md rounded-lg flex items-center justify-center gap-2 transition duration-150">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+          Apply Filters
+        </button>
+</div>
+</div>
+<!-- Sidebar Footer -->
+<div class="pt-3 border-t border-surface-container flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<a class="flex items-center gap-2 text-on-surface-variant hover:text-on-surface font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined text-[16px]">settings</span>
+          Settings
+        </a>
+<a class="flex items-center gap-2 text-on-surface-variant hover:text-on-surface font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined text-[16px]">help_outline</span>
+          Documentation
+        </a>
+</div>
+<div class="flex items-center gap-2 pt-2 px-1">
+<div class="w-6 h-6 rounded-full bg-surface-container-high flex items-center justify-center font-label-sm text-label-sm text-on-surface font-medium">
+          A
+        </div>
+<div class="flex flex-col truncate">
+<span class="font-label-sm text-label-sm text-on-surface truncate">livingstones.admin@global.com</span>
+<span class="font-label-sm text-[10px] text-outline leading-tight">Master Merchant Account</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Canvas Wrapper -->
+<div class="flex-1 flex flex-col pl-[280px] h-full overflow-hidden bg-background">
+<!-- Streamlit Top Bar (Anchor Component: TopNavBar) -->
+<header class="fixed top-0 right-0 left-[280px] h-12 z-30 bg-surface-container-lowest border-b border-outline-variant flex justify-between items-center px-gutter-desktop">
+<div class="flex items-center gap-4">
+<button class="p-1 text-on-surface-variant hover:text-on-surface rounded hover:bg-surface-container transition-colors" id="sidebar-toggle">
+<span class="material-symbols-outlined text-[20px]">menu</span>
+</button>
+<div class="flex items-center gap-2">
+<span class="inline-block w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm text-on-surface">Conectado a Live DB</span>
+</div>
+<span class="text-outline-variant text-[12px]">|</span>
+<div class="flex items-center gap-3 font-label-md text-label-md">
+<a class="text-on-surface font-semibold" href="#">Workspace</a>
+<a class="text-on-surface-variant hover:text-on-surface" href="#">Production</a>
+<a class="text-on-surface-variant hover:text-on-surface" href="#">Live Data</a>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-1">
+<button class="h-8 px-2.5 bg-surface-container-lowest border border-outline-variant hover:bg-surface-container text-on-surface font-label-md text-label-md rounded-lg flex items-center gap-1.5 transition-colors" title="Descargar CSV">
+<span class="material-symbols-outlined text-[16px]">download</span>
+            Descargar CSV
+          </button>
+<button class="h-8 px-3 bg-primary hover:bg-inverse-surface text-on-primary font-label-md text-label-md rounded-lg flex items-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[16px]">ios_share</span>
+            Deploy / Share
+          </button>
+</div>
+<span class="text-outline-variant text-[12px]">|</span>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<button class="p-1 hover:text-on-surface rounded hover:bg-surface-container" title="Pantalla Completa">
+<span class="material-symbols-outlined text-[18px]">fullscreen</span>
+</button>
+<button class="p-1 hover:text-on-surface rounded hover:bg-surface-container" title="Ajustes">
+<span class="material-symbols-outlined text-[18px]">settings</span>
+</button>
+<button class="p-1 hover:text-on-surface rounded hover:bg-surface-container" title="Notificaciones">
+<span class="material-symbols-outlined text-[18px]">notifications</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Scrollable Content Area -->
+<main class="flex-1 overflow-y-auto mt-12 p-gutter-desktop flex flex-col gap-6">
+<!-- Streamlit Title & Introduction -->
+<section class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<h1 class="font-display text-display text-on-surface font-semibold tracking-tight">Livingstones Global · Catálogo y Operaciones de E-Commerce</h1>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container font-label-sm text-label-sm text-on-surface-variant border border-outline-variant">
+<span class="material-symbols-outlined text-[14px]">tune</span>
+            Filtros Aplicados (4)
+          </span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-3xl">
+          Consola analítica unificada para inventario transfronterizo, gestión de pedidos de lujo y telemetría de distribución minorista en tiempo real.
+        </p>
+</section>
+<!-- st.metric Row (4 Cards) -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Metric 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 flex flex-col gap-1 hover:border-outline transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant">Ingresos Brutos (MTD)</span>
+<span class="material-symbols-outlined text-outline text-[18px]">payments</span>
+</div>
+<div class="font-numeric-metric text-numeric-metric text-on-surface mt-1">$482,950</div>
+<div class="flex items-center gap-1.5 mt-1 font-label-sm text-label-sm text-secondary">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+<span>+14.8% vs mes anterior</span>
+</div>
+</div>
+<!-- Metric 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 flex flex-col gap-1 hover:border-outline transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant">Pedidos Activos</span>
+<span class="material-symbols-outlined text-outline text-[18px]">local_shipping</span>
+</div>
+<div class="font-numeric-metric text-numeric-metric text-on-surface mt-1">1,284</div>
+<div class="flex items-center gap-1.5 mt-1 font-label-sm text-label-sm text-secondary">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+<span>+5.2% en despacho</span>
+</div>
+</div>
+<!-- Metric 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 flex flex-col gap-1 hover:border-outline transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant">SKUs en Catálogo</span>
+<span class="material-symbols-outlined text-outline text-[18px]">inventory</span>
+</div>
+<div class="font-numeric-metric text-numeric-metric text-on-surface mt-1">348</div>
+<div class="flex items-center gap-1.5 mt-1 font-label-sm text-label-sm text-on-surface-variant">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>98% en inventario óptimo</span>
+</div>
+</div>
+<!-- Metric 4 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 flex flex-col gap-1 hover:border-outline transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant">Ticket Promedio (AOV)</span>
+<span class="material-symbols-outlined text-outline text-[18px]">receipt_long</span>
+</div>
+<div class="font-numeric-metric text-numeric-metric text-on-surface mt-1">$376.10</div>
+<div class="flex items-center gap-1.5 mt-1 font-label-sm text-label-sm text-secondary">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+<span>+2.4% cesta global</span>
+</div>
+</div>
+</section>
+<!-- st.tabs Navigation -->
+<section class="flex flex-col gap-4">
+<div class="border-b border-outline-variant flex items-center gap-6">
+<button class="pb-3 border-b-2 border-primary font-headline-sm text-headline-sm text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">inventory_2</span>
+            Catálogo de Productos
+          </button>
+<button class="pb-3 border-b-2 border-transparent font-headline-sm text-headline-sm text-on-surface-variant hover:text-on-surface flex items-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[18px]">analytics</span>
+            Análisis de Ventas
+          </button>
+<button class="pb-3 border-b-2 border-transparent font-headline-sm text-headline-sm text-on-surface-variant hover:text-on-surface flex items-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[18px]">receipt</span>
+            Pedidos Recientes
+          </button>
+</div>
+<!-- Interactive Toolbar inside Active Tab -->
+<div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 bg-surface-container-lowest p-3 border border-outline-variant rounded-xl">
+<div class="relative flex-1 max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-2 text-on-surface-variant text-[18px]">search</span>
+<input class="w-full h-8 pl-9 pr-3 bg-surface-container-low border border-outline-variant rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:border-primary" placeholder="Buscar por SKU, título o material..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<label class="font-label-sm text-label-sm text-on-surface-variant whitespace-nowrap">Ordenar por:</label>
+<select class="h-8 bg-surface-container-low border border-outline-variant rounded-lg px-2.5 font-label-md text-label-md text-on-surface focus:outline-none focus:border-primary appearance-none pr-8 relative cursor-pointer">
+<option>Mayor precio</option>
+<option>Novedades</option>
+<option>Mayor margen</option>
+<option>Stock crítico</option>
+</select>
+<button class="h-8 px-3 bg-surface-container hover:bg-surface-container-high rounded-lg text-on-surface font-label-md text-label-md flex items-center gap-1.5 transition-colors border border-outline-variant">
+<span class="material-symbols-outlined text-[16px]">filter_list</span>
+              Vista: Galería
+            </button>
+</div>
+</div>
+<!-- Minimalist Product Cards Grid (4 Items) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Product Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden flex flex-col group hover:border-outline transition-all duration-150">
+<div class="aspect-[4/3] bg-surface-container-low overflow-hidden relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="A pristine luxury minimalist mechanical wristwatch crafted in brushed stainless steel with a slate grey dial and sapphire glass, positioned on a clean white monolithic surface in a minimalist studio setting with architectural soft daylight illumination. The atmosphere is quiet, technological, and refined, adhering to high-end executive product catalog aesthetics." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKqkZZ9Ul1iUEbkEEj25oWO57jd10piG_25F6v1jm5ONRSLwkJwVanOU1VvIChzjaWawbqLjp7ch18r8VWGUXEOz_QjHlJ6JYC5ULryhrsK3ZUNXG3mGh41sqwMV5gCAHqEuCC9YM5mtxFTE_Nx29lwS5TVyxqD6UFVVqb2LaFYVlpUz6NJJeCro3mts6YtPPXoFJwN2GkHsykFWUrT29ffmd3Y8KOkQHteiwZ7IQ"/>
+<span class="absolute top-2.5 right-2.5 px-2 py-0.5 rounded bg-surface-container-lowest/90 backdrop-blur font-label-sm text-label-sm text-on-surface border border-outline-variant">
+                En stock (42)
+              </span>
+</div>
+<div class="p-3.5 flex flex-col flex-1 justify-between gap-3">
+<div class="flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-outline">SKU: LG-HOR-089</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary">Cronógrafo Automático Vanguard</h3>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Minimal Horology · 40mm Acero 904L</span>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-surface-container">
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">$2,450.00</span>
+<span class="font-label-sm text-label-sm text-secondary">Margen: 46.2%</span>
+</div>
+<button class="h-7 px-2.5 border border-outline-variant rounded hover:bg-surface-container text-on-surface font-label-sm text-label-sm transition-colors">
+                  Detalles
+                </button>
+</div>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden flex flex-col group hover:border-outline transition-all duration-150">
+<div class="aspect-[4/3] bg-surface-container-low overflow-hidden relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="An artisanal Italian full-grain leather briefcase in deep espresso brown, featuring brushed brass hardware and hand-stitched edges, resting on a stark light grey stone plinth in a high-fashion editorial gallery. Soft neutral shadows and crisp diffuse morning studio light enhance the rich tactile leather texture and structural elegance." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2AcJtGVW5j54_5_XAUJFPxaq4vx0m1ZKRK39icskvfhHlm28gq7RBtfbxESbeboDjZJLmvi9ioqOyZV5ckYovuwxXJtwkholDMscgb98oTJZmuoTe_YnEo_YrDOMaIbhEyhh2MlE-GZxUDm5I2HW56F_HUJhD1hBgz00kbR0j3xGMSFSziPdWhZtudRoGLXuprXNHlskVDuEt7FEDeTUDn1hvk0m8Bh-Pt8AvpMY"/>
+<span class="absolute top-2.5 right-2.5 px-2 py-0.5 rounded bg-surface-container-lowest/90 backdrop-blur font-label-sm text-label-sm text-on-surface border border-outline-variant">
+                En stock (18)
+              </span>
+</div>
+<div class="p-3.5 flex flex-col flex-1 justify-between gap-3">
+<div class="flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-outline">SKU: LG-LTH-401</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary">Maletín Ejecutivo Florencia</h3>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Leather Goods · Cuero Vacuno Italiano</span>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-surface-container">
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">$1,280.00</span>
+<span class="font-label-sm text-label-sm text-secondary">Margen: 52.8%</span>
+</div>
+<button class="h-7 px-2.5 border border-outline-variant rounded hover:bg-surface-container text-on-surface font-label-sm text-label-sm transition-colors">
+                  Detalles
+                </button>
+</div>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden flex flex-col group hover:border-outline transition-all duration-150">
+<div class="aspect-[4/3] bg-surface-container-low overflow-hidden relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="A luxurious bespoke crewneck knit sweater crafted from pure Mongolian cashmere in a refined oatmeal tone, meticulously draped on a sculptural minimalist mannequin against a clean off-white background. The lighting is subtle, balanced, and editorial, creating velvety textures with sharp silhouettes that highlight premium textile manufacturing." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQjGC1tRzO4Q2V-_qAKhaBzHj5Hj1k6nsaJEntPhIe2yJHr9zKTcxUt-frRysPsD2e77TGjRa0nF-W79kVnd3IRL62nygsX-yc1qJVDsVtY3HdHu1O7YBryS2EwpAjBM6kVeCCn1cZ6pm1m6JhSd55nCbUIAP2lRxgg4UVhZXqWj-i0nryFpsn1XoDz0Gn_R-OWTRqTUL5pvhK5CHdSz5Gg8DAd-D3fXXDn5CkBc4"/>
+<span class="absolute top-2.5 right-2.5 px-2 py-0.5 rounded bg-amber-50 text-amber-700 font-label-sm text-label-sm border border-amber-200">
+                Bajo pedido (5)
+              </span>
+</div>
+<div class="p-3.5 flex flex-col flex-1 justify-between gap-3">
+<div class="flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-outline">SKU: LG-APP-112</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary">Jersey Cachemira Nórdico</h3>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Luxury Apparel · 100% Cachemira 3-ply</span>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-surface-container">
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">$790.00</span>
+<span class="font-label-sm text-label-sm text-secondary">Margen: 61.0%</span>
+</div>
+<button class="h-7 px-2.5 border border-outline-variant rounded hover:bg-surface-container text-on-surface font-label-sm text-label-sm transition-colors">
+                  Detalles
+                </button>
+</div>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden flex flex-col group hover:border-outline transition-all duration-150">
+<div class="aspect-[4/3] bg-surface-container-low overflow-hidden relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Sculptural designer titanium sunglasses with dark polarized gradient lenses, posed on an unpolished raw travertine stone block in a modernist minimalist room bathed in bright architectural morning light. Pure geometric lines and pristine metallic reflections embody restrained luxury and technological precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbczK1sgXZMbDIQJALVhIB2Ktr1u6vy-7uwu4qLhokCSqssW308itxvTOjB_bfEaC7p4ygcK2wU_Yr1bwdRbILKhdclxCEMsylWvR4MeoDG3oz0-ERTg6SO1ALqF_bro3h8PtgnYijK-k5XCtOc90zUlUFjDtuBugzOzQSEtfwsZwwnqj_y5F8bJrZ3kHk3nxBuyS-DqKkBnNNy7xFKHIhwW-uj5bxY0t_BcK9L6g"/>
+<span class="absolute top-2.5 right-2.5 px-2 py-0.5 rounded bg-surface-container-lowest/90 backdrop-blur font-label-sm text-label-sm text-on-surface border border-outline-variant">
+                En stock (64)
+              </span>
+</div>
+<div class="p-3.5 flex flex-col flex-1 justify-between gap-3">
+<div class="flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-outline">SKU: LG-OPT-504</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary">Gafas de Sol Titanio Éter</h3>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Luxury Apparel · Titanio Beta Japonés</span>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-surface-container">
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">$540.00</span>
+<span class="font-label-sm text-label-sm text-secondary">Margen: 58.5%</span>
+</div>
+<button class="h-7 px-2.5 border border-outline-variant rounded hover:bg-surface-container text-on-surface font-label-sm text-label-sm transition-colors">
+                  Detalles
+                </button>
+</div>
+</div>
+</div>
+</div>
+<!-- st.dataframe Interactive Data Table -->
+<div class="mt-2 bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden flex flex-col">
+<div class="px-4 py-3 border-b border-surface-container flex items-center justify-between bg-surface-container-low/50">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-outline">table_chart</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Dataframe: Registro Integral de Inventario Activo</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Mostrando 4 de 348 registros</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="h-10 bg-surface-container-low border-b border-outline-variant">
+<th class="px-4 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">SKU</th>
+<th class="px-4 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Producto</th>
+<th class="px-4 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Categoría</th>
+<th class="px-4 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider text-right">Stock Disp.</th>
+<th class="px-4 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider text-right">Precio Unitario</th>
+<th class="px-4 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider text-center">Estado</th>
+<th class="px-4 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider text-right">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container font-body-sm text-body-sm">
+<tr class="h-12 hover:bg-surface-container-low/50 transition-colors">
+<td class="px-4 font-mono text-[12px] font-medium text-on-surface">LG-HOR-089</td>
+<td class="px-4 font-medium text-on-surface">Cronógrafo Automático Vanguard</td>
+<td class="px-4 text-on-surface-variant">Minimal Horology</td>
+<td class="px-4 text-right font-numeric-metric text-[14px]">42 uds</td>
+<td class="px-4 text-right font-numeric-metric text-[14px]">$2,450.00</td>
+<td class="px-4 text-center">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-teal-50 border border-teal-200 text-teal-800 font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                      En stock
+                    </span>
+</td>
+<td class="px-4 text-right">
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant hover:text-on-surface">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+</button>
+</td>
+</tr>
+<tr class="h-12 hover:bg-surface-container-low/50 transition-colors">
+<td class="px-4 font-mono text-[12px] font-medium text-on-surface">LG-LTH-401</td>
+<td class="px-4 font-medium text-on-surface">Maletín Ejecutivo Florencia</td>
+<td class="px-4 text-on-surface-variant">Leather Goods</td>
+<td class="px-4 text-right font-numeric-metric text-[14px]">18 uds</td>
+<td class="px-4 text-right font-numeric-metric text-[14px]">$1,280.00</td>
+<td class="px-4 text-center">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-teal-50 border border-teal-200 text-teal-800 font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                      En stock
+                    </span>
+</td>
+<td class="px-4 text-right">
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant hover:text-on-surface">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+</button>
+</td>
+</tr>
+<tr class="h-12 hover:bg-surface-container-low/50 transition-colors">
+<td class="px-4 font-mono text-[12px] font-medium text-on-surface">LG-APP-112</td>
+<td class="px-4 font-medium text-on-surface">Jersey Cachemira Nórdico</td>
+<td class="px-4 text-on-surface-variant">Luxury Apparel</td>
+<td class="px-4 text-right font-numeric-metric text-[14px]">5 uds</td>
+<td class="px-4 text-right font-numeric-metric text-[14px]">$790.00</td>
+<td class="px-4 text-center">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-amber-50 border border-amber-200 text-amber-800 font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                      Bajo pedido
+                    </span>
+</td>
+<td class="px-4 text-right">
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant hover:text-on-surface">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+</button>
+</td>
+</tr>
+<tr class="h-12 hover:bg-surface-container-low/50 transition-colors">
+<td class="px-4 font-mono text-[12px] font-medium text-on-surface">LG-OPT-504</td>
+<td class="px-4 font-medium text-on-surface">Gafas de Sol Titanio Éter</td>
+<td class="px-4 text-on-surface-variant">Luxury Apparel</td>
+<td class="px-4 text-right font-numeric-metric text-[14px]">64 uds</td>
+<td class="px-4 text-right font-numeric-metric text-[14px]">$540.00</td>
+<td class="px-4 text-center">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-teal-50 border border-teal-200 text-teal-800 font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                      En stock
+                    </span>
+</td>
+<td class="px-4 text-right">
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant hover:text-on-surface">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<!-- Bottom Streamlit Micro-Footer -->
+<footer class="pt-4 pb-6 flex items-center justify-between text-outline border-t border-surface-container text-[11px] font-label-sm">
+<span>Livingstones Global Enterprise Commerce Suite · Connected via Secure WebSocket (TLS 1.3)</span>
+<span>Latencia: 14ms · Región: eu-west-1 (Frankfurt)</span>
+</footer>
+</main>
+</div>
+<!-- Inline Script for micro-interaction -->
+<script>
+    const sidebarToggle = document.getElementById('sidebar-toggle');
+    const sidebar = document.getElementById('sidebar');
+    const mainWrapper = document.querySelector('.pl-\\[280px\\]');
+    const headerWrapper = document.querySelector('.left-\\[280px\\]');
+
+    let isCollapsed = false;
+
+    sidebarToggle.addEventListener('click', () => {
+      isCollapsed = !isCollapsed;
+      if (isCollapsed) {
+        sidebar.classList.add('-translate-x-full');
+        mainWrapper.classList.remove('pl-[280px]');
+        mainWrapper.classList.add('pl-0');
+        headerWrapper.classList.remove('left-[280px]');
+        headerWrapper.classList.add('left-0');
+      } else {
+        sidebar.classList.remove('-translate-x-full');
+        mainWrapper.classList.add('pl-[280px]');
+        mainWrapper.classList.remove('pl-0');
+        headerWrapper.classList.add('left-[280px]');
+        headerWrapper.classList.remove('left-0');
+      }
+    });
+  </script>
+</body></html>
